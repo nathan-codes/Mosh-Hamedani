@@ -1,18 +1,45 @@
+import { ChangeEvent, useEffect, useState } from "react";
 import { Item } from "../types/ItemList";
 interface filterTableProps {
   data: Item[];
+  onSelect: (item: string) => void;
 }
-const FilterTable = ({ data }: filterTableProps) => {
-    const handleDeleteItem = (id:number) => {
-        // implement delete logic
-    }
+const FilterTable = ({ data, onSelect }: filterTableProps) => {
+  const [tableData, setTableData] = useState<Item[]>(data);
+  const [filterOptions, setFilterOptions] = useState([
+    { label: "All Categories", value: "all_categories" },
+    { label: "Groceries", value: "groceries" },
+    { label: "Utilities", value: "utilities" },
+    { label: "entertainment", value: "entertainment" },
+  ]);
+  const [selectedFilter, setSelectedFilter] = useState("All categories");
+  const handleDeleteItem = (id: number) => {
+    // implement delete logic
+  };
+  const handleFilterSelect = (evt: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedFilter(evt.target.value);
+  };
+
+  const filterbyCategory = (filter: string) => {
+    setTableData((prevState) => prevState.filter((item) =>   item.category=== filter));
+  };
+
+  useEffect(() => {
+    filterbyCategory(selectedFilter);
+    console.log(tableData);
+  }, [selectedFilter]);
+
   return (
     <div className="mt-5">
-      <select name="filterSelect" id="filterSelect" className="form-control">
-        <option value="utilities">All categories</option>
-        <option value="utilities">Groceries</option>
-        <option value="utilities">Utilities</option>
-        <option value="utilities">Entertainment</option>
+      <select
+        name="filterSelect"
+        id="filterSelect"
+        className="form-control"
+        onChange={handleFilterSelect}
+      >
+        {filterOptions.map((option) => {
+          return <option value={option.value}>{option.label}</option>;
+        })}
       </select>
 
       <table className="table table-bordered mt-3">
@@ -25,24 +52,30 @@ const FilterTable = ({ data }: filterTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((groceryItem) => {
+          {tableData.map((groceryItem) => {
             return (
               <tr key={groceryItem.id}>
                 <td>{groceryItem.description}</td>
                 <td>${groceryItem.amount}</td>
                 <td>{groceryItem.category}</td>
                 <td>
-                  <button className="btn btn-outline-danger" onClick={()=>handleDeleteItem(groceryItem.id)}>Delete</button>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={() => handleDeleteItem(groceryItem.id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             );
           })}
-                  <tr>
-                     <td>Total</td>
-                      <td>$ {40}</td>
-                  </tr>
+          <tr>
+            <td>Total</td>
+            <td>$ {40}</td>
+          </tr>
         </tbody>
       </table>
+      <p>Selected Filter: {selectedFilter}</p>
     </div>
   );
 };

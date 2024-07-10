@@ -6,7 +6,7 @@ import { Item } from "../types/ItemList";
 const ExpenseTracker = () => {
 
     const [item, setItems] = useState<Item[]>([
-      { id: 0, description: "Milk", amount: 0, category: "Groceries" },
+      { id: 0, description: "Milk", amount: 0, category: "entertainment" },
     ]); 
 
   const [formData, setFormData] = useState({
@@ -19,7 +19,7 @@ const ExpenseTracker = () => {
   return (
     <section>
           <ExpenseForm />
-          <FilterTable data={item} />
+          <FilterTable data={item} onSelect={()=>""} />
     </section>
   );
 };

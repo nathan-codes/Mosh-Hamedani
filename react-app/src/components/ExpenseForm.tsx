@@ -1,11 +1,16 @@
-import { FormEvent } from "react";
+import { Item } from "../types/ItemList";
 
-const ExpenseForm = () => {
-  const handleSumbit = (evt: FormEvent) => {
-    evt.preventDefault();
-  };
+
+interface ExpenseFormProps {
+  listItem: Item,
+  onSubmit: (item:Item)=>void
+
+}
+
+
+const ExpenseForm = ({ listItem, onSubmit }: ExpenseFormProps) => {
   return (
-    <form action="#" className="" onSubmit={handleSumbit}>
+    <form action="#" className="" onSubmit={onSubmit(listItem)}>
       <div className="mb-3">
         <label htmlFor="description" className="form-label">
           Description
@@ -15,11 +20,13 @@ const ExpenseForm = () => {
           className="form-control"
           id="description"
           placeholder="Enter Description.."
+          value={listItem.description}
+          
         />
       </div>
 
       <div className="mb-3">
-        <label htmlFor="amount" className="form-label">
+        <label htmlFor="amount" className="form-label"> 
           Amount
         </label>
         <input

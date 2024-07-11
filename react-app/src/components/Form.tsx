@@ -20,7 +20,7 @@ const Form = () => {
     <>
       <h1>Form</h1>
       <form action="#">
-        <label htmlFor="name">Name: </label>
+        <label htmlFor="name" >Name: </label>
         <input type="text" id="name" ref={nameRef} />
         <label htmlFor="age">Age: </label>
         <input type="number" id="age" ref={ageRef} />

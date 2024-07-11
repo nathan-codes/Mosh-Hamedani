@@ -2,9 +2,8 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Item } from "../types/ItemList";
 interface filterTableProps {
   data: Item[];
-  onSelect: (item: string) => void;
 }
-const FilterTable = ({ data, onSelect }: filterTableProps) => {
+const FilterTable = ({ data }: filterTableProps) => {
   const [tableData, setTableData] = useState<Item[]>(data);
   const [filterOptions, setFilterOptions] = useState([
     { label: "All Categories", value: "all_categories" },
@@ -12,17 +11,25 @@ const FilterTable = ({ data, onSelect }: filterTableProps) => {
     { label: "Utilities", value: "utilities" },
     { label: "entertainment", value: "entertainment" },
   ]);
-  const [selectedFilter, setSelectedFilter] = useState("All categories");
+  const [selectedFilter, setSelectedFilter] = useState("all_categories");
   const handleDeleteItem = (id: number) => {
     // implement delete logic
   };
   const handleFilterSelect = (evt: ChangeEvent<HTMLSelectElement>) => {
     setSelectedFilter(evt.target.value);
   };
+const filterbyCategory = (filter: string) => {
+  if (filter === "all_categories") {
+    setTableData(data);
+  } else {
+    const filteredData = data.filter((item) => item.category === filter);
+    setTableData(filteredData);
+  }
+};
 
-  const filterbyCategory = (filter: string) => {
-    setTableData((prevState) => prevState.filter((item) =>   item.category=== filter));
-  };
+useEffect(() => {
+  filterbyCategory(selectedFilter);
+}, [selectedFilter, data]);
 
   useEffect(() => {
     filterbyCategory(selectedFilter);

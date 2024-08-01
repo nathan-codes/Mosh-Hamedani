@@ -6,17 +6,29 @@ interface ExpandableTextProps {
 }
 
 const ExpandableText = ({ children, maxChar = 100 }: ExpandableTextProps) => {
-    const [isExpanded, setIsExpanded] = useState(false);
-    
-    const text = isExpanded ? children : children.slice(0, maxChar) + "...";
-    
-    if (children.length <= maxChar) return <p>{children}</p>
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleToggleTextExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const isTextExpandable = children.length > maxChar;
+  const displayedText = isExpanded
+    ? children
+    : children.slice(0, maxChar) +"...";
+
   return (
-    <p>
-      {text}
-      <button onClick={()=>setIsExpanded(!isExpanded)}> {isExpanded ? "Less" : "More"}</button>
-    </p>
+    <div>
+      <p>{displayedText}</p>
+      {isTextExpandable && (
+        <button onClick={handleToggleTextExpand}>
+          {isExpanded ? "Less" : "More"}
+        </button>
+      )}
+    </div>
   );
 };
 
 export default ExpandableText;
+
+

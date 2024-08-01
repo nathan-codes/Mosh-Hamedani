@@ -7,6 +7,7 @@ import ExpandableText from "./components/ExpandableText";
 import Form from "./components/Form";
 import ExpenseTracker from "./components/ExpenseTracker";
 
+
 const App = () => {
   const [isAlertActive, setIsAlertActive] = useState(false);
   const [name, setName] = useState("");
@@ -29,8 +30,16 @@ const App = () => {
      wew Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores iure tempora rem esse quasi! Nesciunt, rem recusandae quam, repellat, cupiditate amet blanditiis nam placeat maxime fugit ex sunt illum reprehenderit quaerat error maiores provident tempora? Suscipit deserunt alias tempora inventore!
       </ExpandableText> */}
 {/* <Form /> */}
-<ExpenseTracker />
+      {/* <ExpenseTracker /> */}
+      
       {/* <ListGroup items={["E",":ER"]} onselectItem={} /> */}
+      {/* <Form /> */}
+
+
+      {/* <ExpandableText maxChar={2}>
+        sd Lorem ipsum dsds Lorem ipsum dolor sit amet.dsdsdsds sdsds dsds ds 
+      </ExpandableText> */}
+      <ExpenseTracker />
     </div>
   );
 };

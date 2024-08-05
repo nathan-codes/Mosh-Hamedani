@@ -1,11 +1,14 @@
+import ExpenseForm from "./ExpenseForm"
 
 
 const ExpenseTracker = () => {
   return (
-    <div>
-      Expense Tracker
-    </div>
-  )
+    <>
+      <ExpenseForm />
+      
+    </>
+  );
 }
 
 export default ExpenseTracker
+ 

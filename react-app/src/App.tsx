@@ -29,17 +29,22 @@ const App = () => {
       {/* <ExpandableText  maxChar={20} > 
      wew Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores iure tempora rem esse quasi! Nesciunt, rem recusandae quam, repellat, cupiditate amet blanditiis nam placeat maxime fugit ex sunt illum reprehenderit quaerat error maiores provident tempora? Suscipit deserunt alias tempora inventore!
       </ExpandableText> */}
-{/* <Form /> */}
+      {/* <Form /> */}
       {/* <ExpenseTracker /> */}
-      
+
       {/* <ListGroup items={["E",":ER"]} onselectItem={} /> */}
       {/* <Form /> */}
-
 
       {/* <ExpandableText maxChar={2}>
         sd Lorem ipsum dsds Lorem ipsum dolor sit amet.dsdsdsds sdsds dsds ds 
       </ExpandableText> */}
-      <ExpenseTracker />
+      <main className="container  ">
+        <div className="row">
+          <div className="col">
+            <ExpenseTracker />
+          </div>
+        </div>
+      </main>
     </div>
   );
 };

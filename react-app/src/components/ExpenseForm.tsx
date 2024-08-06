@@ -1,55 +1,75 @@
-import { FormEvent, useState } from "react";
+import { useForm } from "react-hook-form";
 
-interface GroceryList {
-  description: string,
-  amount: number,
-  category:string
+import { FormData } from "../Types";
+import { useEffect } from "react";
+interface ExpenseFormProps {
+  onsubmit: (formData: FormData) => void;
 }
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ onsubmit }: ExpenseFormProps) => {
+  const {
+    register,
+    reset,
+    formState: { errors, isSubmitSuccessful },
 
-  const [formData, setFormData] = useState<GroceryList>()
+    handleSubmit,
+  } = useForm<FormData>();
 
-
-  const handleformUpdate = (evt: FormEvent<HTMLInputElement|HTMLSelectElement>) => {
-    const target = evt.target as HTMLInputElement
-    console.log(target.value)
-  }
 
   return (
-    <form action="">
+    <form onSubmit={handleSubmit((data) =>
+    {
+      onsubmit(data)
+      reset()
+    }
+    )}>
       <div className="form-group mb-3">
-        <label htmlFor="description">Description</label>
-        <input
-          type="description"
-          className="form-control"
-          id="description"
-          placeholder="Enter Description"
-          value={formData?.description}
-          onChange={(evt)=>handleformUpdate(evt)}
-        
-        />
-      </div>
-      <div className="form-group mb-3">
-        <label htmlFor="amount">Amount</label>
+        <label htmlFor="description" className="mb-1">
+          Desciption
+        </label>
         <input
           type="text"
+          id="desciption"
           className="form-control"
-          id="amount"
-          placeholder="Enter Amount"
- 
+          {...register("description", { required: true })}
         />
+        {errors.description?.type === "required" && (
+          <p className="text-danger">Description is required</p>
+        )}
       </div>
       <div className="form-group mb-3">
-        <label htmlFor="category">Category</label>
-        <select id="category" className="form-control">
-          <option>Choose...</option>
-          <option>...</option>
+        <label htmlFor="amout" className="mb-1">
+          Amount
+        </label>
+        <input
+          type="number"
+          id="amount"
+          className="form-control"
+          {...register("amount", { required: true })}
+        />
+        {errors.amount?.type === "required" && (
+          <p className="text-danger">Amount is required</p>
+        )}
+      </div>
+      <div className="form-group mb-3">
+        <label htmlFor="category" className="mb-1">
+          Category
+        </label>
+        <select
+          id="category"
+          className="form-control"
+          {...register("category", { required: true })}
+        >
+          <option></option>
+          <option>Groceries</option>
+          <option>Utilities</option>
+          <option>Entertainment</option>
         </select>
+        {errors.category?.type === "required" && (
+          <p className="text-danger">Category is required</p>
+        )}
       </div>
-      <div>
-        <button className="btn btn-primary">Submit</button>
-      </div>
+      <button className="btn btn-primary">Submit</button>
     </form>
   );
 };

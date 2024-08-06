@@ -1,50 +1,57 @@
-import { FormEvent, useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import { Schema, z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+  name: z.string().min(3, { message: "Name must be at least 3 characters" }),
+  age: z
+    .number({ invalid_type_error: "Age field is required" })
+    .min(18, { message: "Age must be at least 18" }),
+});
+
+type FormData = z.infer<typeof schema>;
 
 const Form = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    password: "",
-    age: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const handleSubmit = (evt: FormEvent) => {
-    evt.preventDefault()
-    console.log(formData)
-   }
-    
+  const submitHandler = (data: FieldValues) => {
+    console.log(data);
+  };
+
+  console.log("Form State Errors", errors);
+
   return (
-    <div>
-      <form action="#" onSubmit={handleSubmit} className="d-flex flex-column border border-primary">
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            onChange={(evt) =>
-              setFormData({ ...formData, name: evt.target.value })
-            }
-          />
-        </div>
-
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input type="text" id="password" />
-        </div>
-        <div>
-          <label htmlFor="password">Age:</label>
-          <input
-            type="number"
-            id="age"
-            onChange={(evt) =>
-              setFormData({ ...formData, age: evt.target.value })
-            }
-          />
-        </div>
-        <div>
-          <button>Submit</button>
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit(submitHandler)}>
+      <div className="mb-3">
+        <label htmlFor="name" className="form-label">
+          Name
+        </label>
+        <input
+          {...register("name")}
+          type="text"
+          className="form-control"
+          name="name"
+        />
+        {errors.name && <p className="text-danger">{errors.name.message}</p>}
+      </div>
+      <div className="mb-3">
+        <label htmlFor="numer">Number</label>
+        <input
+          {...register("age", { valueAsNumber: true })}
+          type="number"
+          id="number"
+          className="form-control"
+        />
+        {errors.age && <p className="text-danger">{errors.age.message}</p>}
+      </div>
+      <button disabled={!isValid} type="submit" className="btn btn-primary">
+        Submit
+      </button>
+    </form>
   );
 };
 

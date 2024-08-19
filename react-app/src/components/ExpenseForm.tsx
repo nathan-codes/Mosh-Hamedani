@@ -10,7 +10,7 @@ const ExpenseForm = ({ onsubmit }: ExpenseFormProps) => {
   const {
     register,
     reset,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
 
     handleSubmit,
   } = useForm<FormData>();

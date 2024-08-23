@@ -4,7 +4,7 @@ import { CanceledError } from "axios";
 export interface Game {
   id: string;
   name: string;
-    background_image: string;
+  background_image: string;
 }
 
 interface FetchGamesSchema {

@@ -12,7 +12,8 @@ import { SiNintendo } from "react-icons/si";
 import { HStack, Icon } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 
-const IconMap: { [key: string]: IconType } = {
+
+const IconMap: Record<string, IconType> = {
   pc: FaWindows,
   playstation: FaPlaystation,
   xbox: FaXbox,

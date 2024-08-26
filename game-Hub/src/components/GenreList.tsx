@@ -4,14 +4,15 @@ import getCroppedImages from "../services/getCroppedImageUrl";
 
 
 interface GenreListProps {
-  onSelectGenre: (genre:Genre) => void
+  onSelectGenre: (genre: Genre) => void
+  selectedGenre: Genre |null;
 }
 
-const GenreList = ({ onSelectGenre }:GenreListProps) => {
+const GenreList = ({ onSelectGenre, selectedGenre }:GenreListProps) => {
   const { data: genres, isLoading, error } = useGenres();
   if (error) return null;
   if (isLoading) return <Spinner />;
-
+  
   return (
     <List>
       {genres.map((genre) => {
@@ -23,13 +24,14 @@ const GenreList = ({ onSelectGenre }:GenreListProps) => {
                 boxSize={"32px"}
                 borderRadius={"5px"}
               />
-              <Button
+              <Button 
+                fontWeight={selectedGenre?.id === genre.id?"bold":""}
                 variant={"link"}
                 onClick={() => onSelectGenre(genre)}
                 fontSize={"lg"}
               >
 
-                {genre.name}{" "}
+                {genre.name}
               </Button>
             </HStack>
           </ListItem>

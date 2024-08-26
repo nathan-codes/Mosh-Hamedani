@@ -3,6 +3,7 @@ import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import { Genre } from "../hooks/useGenres";
+import PlatformMenu from "./PlatformMenu";
 
 interface GamesGridProps {
   selectedGenre: Genre | null
@@ -18,6 +19,7 @@ const GamesGrid = ({selectedGenre}:GamesGridProps) => {
   return (
     <>
       {error && <Text>{error}</Text>}
+      <PlatformMenu />
    
       <SimpleGrid columns={{ sm: 1, md: 2, lg: 3 }} spacing={5} padding="10px">
          {isLoading &&

@@ -2,7 +2,7 @@ import { DependencyList, useEffect, useState } from "react";
 import apiClient from "../services/api-Client";
 import { AxiosRequestConfig, CanceledError } from "axios";
 
-interface FetchGenresSchema<T> {
+interface FetchResultSchema<T> {
   count: number;
   results: T[];
 }
@@ -20,7 +20,7 @@ const useData = <T>(
     const controller = new AbortController();
     setLoading(true);
     apiClient
-      .get<FetchGenresSchema<T>>(endpoint, {
+      .get<FetchResultSchema<T>>(endpoint, {
         signal: controller.signal,
         ...requestConfig,
       })

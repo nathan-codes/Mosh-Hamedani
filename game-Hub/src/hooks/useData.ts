@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { DependencyList, useEffect, useState } from "react";
 import apiClient from "../services/api-Client";
-import { CanceledError } from "axios";
+import { AxiosRequestConfig, CanceledError } from "axios";
 
 interface FetchGenresSchema<T> {
   count: number;
   results: T[];
 }
 
-const useData = <T>(endpoint: string) => {
-  const [data, setGenres] = useState<T[]>([]);
+const useData = <T>(
+  endpoint: string,
+  requestConfig?: AxiosRequestConfig,
+  deps?: DependencyList 
+) => {
+  const [data, setData] = useState<T[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -16,10 +20,13 @@ const useData = <T>(endpoint: string) => {
     const controller = new AbortController();
     setLoading(true);
     apiClient
-      .get<FetchGenresSchema<T>>(endpoint, { signal: controller.signal })
+      .get<FetchGenresSchema<T>>(endpoint, {
+        signal: controller.signal,
+        ...requestConfig,
+      })
       .then((res) => {
         setLoading(false);
-        return setGenres(res.data.results);
+        setData(res.data.results);
       })
       .catch((err) => {
         if (err instanceof CanceledError) return;
@@ -28,7 +35,7 @@ const useData = <T>(endpoint: string) => {
       });
 
     return () => controller.abort();
-  }, []);
+  }, deps? [...deps]:[]); // Concatenate dependencies
 
   return { data, error, isLoading };
 };

@@ -4,6 +4,7 @@ import PlatformList from "./PlatformList";
 import CriticScore from "./CriticScore";
 import getCroppedImages from "../services/getCroppedImageUrl";
 import GameCardContainer from "./GameCardContainer";
+import Emoji from "./Emoji";
 
 interface GameCardProps {
   game: Game;
@@ -13,13 +14,14 @@ const GameCard = ({ game }: GameCardProps) => {
   return (
     <GameCardContainer>
       <Card>
-        <Image src={getCroppedImages(game.background_image)} />
+        <Image src={getCroppedImages(game.background_image)}  />
         <CardBody>
           <HStack justifyContent={"space-between"} marginBottom={3}>
             <PlatformList platforms={game.parent_platforms} />
             <CriticScore score={game.metacritic} />
           </HStack>
           <Heading fontSize={"2xl"}> {game.name}</Heading>
+          <Emoji rating={game.rating_top}/>
         </CardBody>
       </Card>
     </GameCardContainer>
